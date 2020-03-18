@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      ;(async () => {
+        axios.defaults.withCredentials = true
+        axios.defaults.baseURL = 'http://localhost:4000'
+        const res = await axios.get('/api/users', {
+          headers: { 'X-Token': 'jilei' }
+        })
+        document.writeln(`Response : ${JSON.stringify(res.data)}`)
+      })()
+    </script>
+    11111 -->
+    <form action="/api/save" method="post">
+      <input type="text" name="abc" value="123" />
+      <input type="text" name="def" value="456" />
+      <input type="submit" value="save" />
+    </form>
+  </body>
+</html>
