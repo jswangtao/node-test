@@ -2,6 +2,9 @@ const handleBlogRouter = require('./src/router/blog')
 const handleUserRouter = require('./src/router/user')
 const querystring = require('querystring')
 
+let SESSION_DATA = {}
+
+
 // 解析postData
 const getPostData = req => {
   const promise = new Promise((resolve, reject) => {
@@ -29,6 +32,8 @@ const getPostData = req => {
   return promise
 }
 
+
+
 const serverHandle = (req, res) => {
   // 设置返回格式
   res.setHeader('content-type', 'application/json')
@@ -38,9 +43,39 @@ const serverHandle = (req, res) => {
   const path = url.split('?')[0]
   req.path = path
 
-  // 添加query
+  // 解析query
   req.query = querystring.parse(url.split('?')[1])
 
+  // 解析cookie
+  req.cookie = {}
+  const cookieStr = req.headers.cookie || ''
+  cookieStr.split(';').forEach(item => {
+    if (!item) {
+      return
+    }
+    const arr = item.split('=')
+    const key = arr[0].trim()
+    const val = arr[1].trim()
+    req.cookie[key] = val
+  })
+
+
+  // 解析session
+  let needSetCookie = false
+  let userId = req.cookie.userId
+  if (userId) {
+    if (!SESSION_DATA[userId]) {
+      SESSION_DATA[userId] = {}
+    }
+  } else {
+    needSetCookie = true
+    userId = `${Date.now()}_${Math.random()}`
+    SESSION_DATA[userId] = {}
+  }
+  req.session = SESSION_DATA[userId]
+  console.log(SESSION_DATA[userId],222);
+
+  
   // 处理postData
   getPostData(req).then(postData => {
     req.body = postData
@@ -54,6 +89,9 @@ const serverHandle = (req, res) => {
     const blogDataResult = handleBlogRouter(req, res)
     if (blogDataResult) {
       blogDataResult.then(blogData => {
+        if (needSetCookie) {
+          res.setHeader('Set-Cookie', `userId=${userId};path=/;httpOnly`)
+        }
         res.end(JSON.stringify(blogData))
       })
       return
@@ -63,6 +101,9 @@ const serverHandle = (req, res) => {
     const userDataResult = handleUserRouter(req, res)
     if (userDataResult) {
       userDataResult.then(userData => {
+        if (needSetCookie) {
+          res.setHeader('Set-Cookie', `userId=${userId};path=/;httpOnly`)
+        }
         res.end(JSON.stringify(userData))
       })
       return
