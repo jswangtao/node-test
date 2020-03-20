@@ -1,5 +1,5 @@
-const handleBlogRouter = require('./router/blog')
-const handleUserRouter = require('./router/user')
+const handleBlogRouter = require('./src/router/blog')
+const handleUserRouter = require('./src/router/user')
 const querystring = require('querystring')
 
 // 解析postData
@@ -46,16 +46,25 @@ const serverHandle = (req, res) => {
     req.body = postData
 
     // 处理blog路由
-    const blogData = handleBlogRouter(req, res)
-    if (blogData) {
-      res.end(JSON.stringify(blogData))
+    // const blogData = handleBlogRouter(req, res)
+    // if (blogData) {
+    //   res.end(JSON.stringify(blogData))
+    //
+    // }
+    const blogDataResult = handleBlogRouter(req, res)
+    if (blogDataResult) {
+      blogDataResult.then(blogData => {
+        res.end(JSON.stringify(blogData))
+      })
       return
     }
 
     // 处理user路由
-    const userData = handleUserRouter(req, res)
-    if (userData) {
-      res.end(JSON.stringify(userData))
+    const userDataResult = handleUserRouter(req, res)
+    if (userDataResult) {
+      userDataResult.then(userData => {
+        res.end(JSON.stringify(userData))
+      })
       return
     }
 
