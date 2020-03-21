@@ -36,3 +36,8 @@ server {
 
 
 docker run -d -p 80:80 --name nginx -v /Users/wangtao/docker/nginx/nginx.conf:/etc/nginx/nginx.conf -v /Users/wangtao/docker/nginx/conf.d:/etc/nginx/conf.d -v /Users/wangtao/docker/nginx/logs:/var/log/nginx nginx
+
+
+# crontab 定时任务
+crontab -e   添加定时任务
+crontab -l   查询当前机器的定时任务
