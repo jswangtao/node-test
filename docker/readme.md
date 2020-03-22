@@ -1,10 +1,13 @@
 /**
-*这个为docker容器映射宿主机的配置目录
-*
-*
+*这个为docker准备
 */
 
-
+# redis操作
+启动  docker run -itd --name redis-test -p 6379:6379 redis
+进入  docker exec -it redis-test /bin/bash
+redis-cli
+查看  key *
+清空  flushall
 
 
 # nginx反向代理配置步骤
