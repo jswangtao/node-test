@@ -9,7 +9,6 @@ const handleUserRouter = (req, res) => {
   if (method === 'POST' && req.path === '/api/user/login') {
     // const { username, password } = req.query
     const { username, password } = req.body
-    console.log(username, password);
     const result = login(username, password)
     return result.then(data => {
       if (data.username) {
