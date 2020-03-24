@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+        width: 300px;
+        height: 40px;
+        background-color: pink;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+      测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+    </div>
+    <script>
+      // class Test {
+      //   constructor() {
+      //     this.name ='张三'
+      //   }
+      //   age = 25
+      // }
+
+      // class Test {
+      //   constructor() {
+      //     this.fn1 = () => {
+      //       console.log('fn1', this)
+      //     }
+      //   }
+      //   fn2 = () => {
+      //     console.log('fn2', this)
+      //   }
+      //   fn3() {
+      //     console.log('fn3', this)
+      //   }
+      // }
+
+      // class Test {
+      //   constructor() {
+      //     this.value ='张三'
+      //   }
+      //   get value(){
+      //     return this.value
+      //   }
+      //   set value(){
+      //    return this.value = 1
+      //   }
+      // }
+
+      // const bar = new Bar() // it's ok
+      // function Bar() {
+      //   this.bar = 42
+      // }
+
+      // 引用一个未声明的变量
+      // function Bar() {
+      //   baz = 42 // it's ok
+      // }
+      // const bar = new Bar()
+
+      // var b = 10
+      // ;(function b() {
+      //   b = 20
+      //   console.log(b)
+      //   console.log(window.b); // 10，不是20
+      // })()
+      // var name = 'Tom'
+      async function async1() {
+        console.log('2')
+        await async2()
+        console.log('5')
+      }
+      async function async2() {
+        console.log('3')
+      }
+
+      console.log('1')
+      async1()
+      console.log('4')
+    </script>
+  </body>
+</html>

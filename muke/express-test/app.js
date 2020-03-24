@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('../like-express/like-express')
+// const express = require('express')
 
 // http请求实例
 const app = express()
@@ -10,7 +11,7 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
   // 假设在处理cookie
-  req.cookies = {
+  req.cookie = {
     userId: '123'
   }
   next()
@@ -42,22 +43,26 @@ app.post('/api',(req,res,next)=>{
   next()
 })
 
-app.get('/api/get-cookie',(req,res,next)=>{
+// 模拟登陆验证
+function loginCheck(req,res,next) {
+  setTimeout(() => {
+    console.log('模拟登陆成功');
+    next()
+  }, 1000);
+}
+
+app.get('/api/get-cookie',loginCheck,(req,res,next)=>{
   console.log('get-cookie,处理api路由');
   res.json({
     errno:0,
-    data:req.cookies
+    data:req.cookie
   })
-  next()
 })
 
-app.post('/api/get-cookie',(req,res,next)=>{
-  console.log('get-cookie,处理api路由');
-  res.json({
-    errno:0,
-    data:req.cookies
-  })
-  next()
+app.listen(8000,()=>{
+  console.log('server is listening 8000');
 })
+
+
 
 
