@@ -44,6 +44,7 @@ function getFileName(filename) {
   const promise = new Promise((resolve, reject) => {
     fs.readFile(fullFileName, (err, data) => {
       if (err) {
+        console.log(1111)
         reject(err)
         return
       }
@@ -53,16 +54,28 @@ function getFileName(filename) {
   return promise
 }
 
-getFileName('a.json')
-  .then(aData => {
-    console.log(aData)
-    return getFileName(aData.next)
-  })
-  .then(bData => {
-    console.log(bData)
-    return getFileName(bData.next)
-  })
-  .then(cData => {
-    console.log(cData)
-    // return getFileName(cData.next)
-  })
+// getFileName('a.json')
+//   .then(aData => {
+//     console.log(aData)
+//     return getFileName(aData.next)
+//   })
+//   .then(bData => {
+//     console.log(bData)
+//     return getFileName(bData.next)
+//   })
+//   .then(cData => {
+//     console.log(cData)
+//     // return getFileName(cData.next)
+//   })
+
+async function readFileData() {
+    const aData = await getFileName('a.json')
+    console.log('aData', aData)
+    const bData = await getFileName(aData.next)
+    console.log('bData', bData)
+    const cData = await getFileName(bData.next)
+    console.log('cData', cData)
+ 
+}
+
+readFileData()
