@@ -44,3 +44,11 @@ docker run -d -p 80:80 --name nginx -v /Users/wangtao/docker/nginx/nginx.conf:/e
 # crontab 定时任务
 crontab -e   添加定时任务
 crontab -l   查询当前机器的定时任务
+
+# pm2
+pm2 start
+pm2 stop
+pm2 delete app
+pm2 list
+pm2 log app
+pm2 info app
