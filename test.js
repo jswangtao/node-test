@@ -1,18 +1,10 @@
-let bar;
-
-setTimeout(() => {
-  console.log('setTimeout');
-}, 0)
-
-setImmediate(() => {
-  console.log('setImmediate');
-})
-function someAsyncApiCall(callback) {
-  process.nextTick(callback);
+async function test() {
+  // await fn()
+  console.log('222')
 }
 
-someAsyncApiCall(() => {
-  console.log('bar', bar); // 1
-});
+function fn() {
+  console.log('111')
+}
 
-bar = 1;
+console.log(test())
