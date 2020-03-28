@@ -6,7 +6,7 @@
 启动  docker run -itd --name redis-test -p 6379:6379 redis
 进入  docker exec -it redis-test /bin/bash
 redis-cli
-查看  key *
+查看  keys *
 清空  flushall
 
 

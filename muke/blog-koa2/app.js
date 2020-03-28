@@ -7,9 +7,16 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
+const fs =require('fs');
+const path = require('path');
+const morgan = require('koa-morgan');
 
 const index = require('./routes/index')
 const users = require('./routes/users')
+const user = require('./routes/user')
+const blog = require('./routes/blog')
+
+const {REDIS_CONF} = require('./conf/db');
 
 // error handler
 onerror(app)
@@ -38,6 +45,17 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
+const ENV = process.env.NODE_ENV
+if (ENV !== 'production') {
+  app.use(morgan('dev'))
+}else{
+  const fileName = path.join(__dirname,'logs','access.log')
+  const writeStream = fs.createWriteStream(fileName,{flags:'a'})
+  app.use(morgan('combined',{
+    stream:writeStream
+  }))
+}
+
 // redis配置
 app.keys = ['wimi123']
 app.use(
@@ -49,7 +67,7 @@ app.use(
       maxAge:24 * 60 * 60 *1000
     },
     store:redisStore({
-      all:'127.0.0.1'
+      all:`${REDIS_CONF.host}`
     })
   })
 )
@@ -57,6 +75,8 @@ app.use(
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(user.routes(), user.allowedMethods())
+app.use(blog.routes(), blog.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
